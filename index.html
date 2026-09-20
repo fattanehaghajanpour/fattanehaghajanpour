@@ -6,7 +6,6 @@
     <title>یادبود زنده‌یاد فتانه آقاجان‌پور</title>
     
     <style>
-        /* اتصال به فونت اختصاصی آپلود شده در گیت‌هاب */
         @font-face {
             font-family: 'MemorialFont';
             src: url('font.woff2') format('woff2');
@@ -14,14 +13,14 @@
         }
 
         :root {
-            --bg-color: #0b0f17;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-sheen: rgba(255, 255, 255, 0.25);
+            --bg-base: #06090e;
+            --liquid-glass-bg: rgba(255, 255, 255, 0.04);
+            --liquid-glass-border: rgba(255, 255, 255, 0.16);
+            --liquid-inner-light: rgba(255, 255, 255, 0.45);
             --accent-gold: #e5c07b;
-            --accent-gold-glow: rgba(229, 192, 123, 0.25);
-            --text-main: #f0f3f6;
-            --text-muted: #9aa4b2;
+            --accent-glow: rgba(229, 192, 123, 0.22);
+            --text-primary: #f5f7fa;
+            --text-secondary: #a0aec0;
         }
 
         * {
@@ -32,72 +31,83 @@
         }
 
         body {
-            font-family: 'MemorialFont', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Tahoma, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            font-family: 'MemorialFont', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px 14px;
+            padding: 24px 16px;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* حباب‌های نوری شناور پشت شیشه برای افکت Liquid Glass */
-        .ambient-glow {
+        /* لایه‌های مایع درخشان و شناور پس‌زمینه برای ایجاد شکست نور شیشه‌ای */
+        .ambient-sphere {
             position: fixed;
-            width: 350px;
-            height: 350px;
             border-radius: 50%;
-            filter: blur(90px);
+            filter: blur(100px);
             z-index: 0;
             pointer-events: none;
-            opacity: 0.45;
-            animation: floatGlow 12s ease-in-out infinite alternate;
+            opacity: 0.55;
+            animation: floatAmbient 14s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
         }
 
-        .glow-1 {
-            background: radial-gradient(circle, #2b3a67, transparent 70%);
-            top: -50px;
-            right: -50px;
+        .sphere-1 {
+            width: 380px;
+            height: 380px;
+            background: radial-gradient(circle, #384c7a, transparent 70%);
+            top: -60px;
+            right: -60px;
         }
 
-        .glow-2 {
-            background: radial-gradient(circle, #483248, transparent 70%);
+        .sphere-2 {
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, #5e3b5e, transparent 70%);
             bottom: -50px;
             left: -50px;
-            animation-duration: 16s;
+            animation-duration: 18s;
         }
 
-        @keyframes floatGlow {
+        .sphere-3 {
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(229, 192, 123, 0.18), transparent 70%);
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes floatAmbient {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 40px) scale(1.15); }
+            100% { transform: translate(25px, 35px) scale(1.12); }
         }
 
-        /* ظرف اصلی اپل با استایل Liquid Glass */
-        .glass-container {
+        /* کانتینر اصلی Liquid Glass اپل */
+        .liquid-card {
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: 480px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(28px) saturate(180%);
-            -webkit-backdrop-filter: blur(28px) saturate(180%);
-            border: 1px solid var(--glass-border);
-            border-radius: 36px;
-            padding: 28px 20px;
+            max-width: 420px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(35px) saturate(210%);
+            -webkit-backdrop-filter: blur(35px) saturate(210%);
+            border: 1px solid var(--liquid-glass-border);
+            border-radius: 40px;
+            padding: 30px 22px;
             box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.45),
-                inset 0 1px 1px var(--glass-sheen);
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                inset 0 1px 1px 0 var(--liquid-inner-light),
+                inset 0 -1px 1px 0 rgba(255, 255, 255, 0.05);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 22px;
+            gap: 20px;
         }
 
-        /* هدر و مشخصات */
-        .memorial-header {
+        .header-content {
             text-align: center;
         }
 
@@ -109,32 +119,32 @@
             opacity: 0.9;
         }
 
-        .name-title {
-            font-size: 1.45rem;
+        .memorial-name {
+            font-size: 1.55rem;
             font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 4px;
-            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.15);
+            letter-spacing: -0.5px;
+            text-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
         }
 
-        .subtitle {
+        .memorial-subtitle {
             font-size: 0.85rem;
-            color: var(--text-muted);
-            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-top: 4px;
         }
 
-        /* قاب ویدیوی شیشه‌ای و مدرن */
-        .video-wrapper {
+        /* قاب اختصاصی ویدیو عمودی ۹:۱۶ با حاشیه شیشه‌ای صیقلی */
+        .video-container {
             position: relative;
             width: 100%;
-            border-radius: 24px;
+            max-width: 290px;
+            aspect-ratio: 9 / 16;
+            border-radius: 28px;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.35),
-                inset 0 0 15px rgba(255, 255, 255, 0.03);
-            aspect-ratio: 16 / 9;
+                0 20px 45px rgba(0, 0, 0, 0.5),
+                inset 0 0 1px 1px rgba(255, 255, 255, 0.2);
         }
 
         video {
@@ -143,24 +153,31 @@
             object-fit: cover;
             display: block;
             outline: none;
+            background: #000;
         }
 
-        /* کادر شعر و متن یادبود */
-        .poem-card {
-            background: rgba(255, 255, 255, 0.025);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            padding: 16px 18px;
-            text-align: center;
+        /* پنل متن یادبود شیشه‌ای */
+        .memorial-text-card {
             width: 100%;
-            line-height: 1.85;
-            font-size: 0.88rem;
-            color: #d6dce5;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 16px 20px;
+            text-align: center;
+            line-height: 1.8;
+            font-size: 0.9rem;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
 
-        /* دکمه تعاملی صلوات و فاتحه (Apple Frosted Pill) */
-        .counter-section {
+        .memorial-note {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.82rem;
+            color: var(--accent-gold);
+        }
+
+        /* دکمه صلوات شیشه‌ای کپسولی */
+        .action-area {
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -168,133 +185,122 @@
             gap: 10px;
         }
 
-        .salawat-btn {
-            background: linear-gradient(135deg, rgba(229, 192, 123, 0.15), rgba(255, 255, 255, 0.05));
-            border: 1px solid rgba(229, 192, 123, 0.35);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            color: #fff;
-            padding: 14px 28px;
-            border-radius: 50px;
+        .pill-button {
+            width: 100%;
+            max-width: 280px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            color: #ffffff;
+            padding: 14px 22px;
+            border-radius: 100px;
             font-size: 0.95rem;
             font-family: inherit;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 12px;
-            transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-            box-shadow: 
-                0 10px 25px rgba(0, 0, 0, 0.25),
-                0 0 15px var(--accent-gold-glow);
-            width: 100%;
-            max-width: 290px;
             justify-content: center;
+            gap: 12px;
+            box-shadow: 
+                0 12px 30px rgba(0, 0, 0, 0.35),
+                inset 0 1px 1px rgba(255, 255, 255, 0.35),
+                0 0 20px var(--accent-glow);
+            transition: transform 0.15s ease, background 0.2s ease;
         }
 
-        .salawat-btn:active {
+        .pill-button:active {
             transform: scale(0.96);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(135deg, rgba(229, 192, 123, 0.25), rgba(255, 255, 255, 0.1));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 100%);
         }
 
         .counter-badge {
             background: var(--accent-gold);
-            color: #1a160c;
+            color: #0d0f14;
             font-weight: 700;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 0.88rem;
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 0.85rem;
             min-width: 32px;
             text-align: center;
         }
 
-        .hint-text {
+        .status-caption {
             font-size: 0.75rem;
-            color: var(--text-muted);
-            letter-spacing: 0.2px;
+            color: var(--text-secondary);
         }
 
-        /* فوتر ظریف */
-        .footer {
+        .domain-tag {
             font-size: 0.72rem;
-            color: rgba(255, 255, 255, 0.3);
-            margin-top: -6px;
+            color: rgba(255, 255, 255, 0.35);
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
 
-    <!-- افکت‌های نور پس‌زمینه (Liquid Ambient) -->
-    <div class="ambient-glow glow-1"></div>
-    <div class="ambient-glow glow-2"></div>
+    <!-- شکست نور مایع در پس‌زمینه -->
+    <div class="ambient-sphere sphere-1"></div>
+    <div class="ambient-sphere sphere-2"></div>
+    <div class="ambient-sphere sphere-3"></div>
 
-    <!-- بدنه شیشه‌ای کارت -->
-    <div class="glass-container">
+    <!-- بدنه شیشه‌ای -->
+    <main class="liquid-card">
         
-        <header class="memorial-header">
-            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-            <h1 class="name-title">زنده‌یاد فتانه آقاجان‌پور</h1>
-            <p class="subtitle">گرامی‌باد یاد و خاطره جاودانه‌اش</p>
+        <header class="header-content">
+            <p class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+            <h1 class="memorial-name">زنده‌یاد فتانه آقاجان‌پور</h1>
+            <p class="memorial-subtitle">گرامی‌باد یاد و خاطره جاودانه‌اش</p>
         </header>
 
-        <!-- بخش ویدیو بدون عکس (پلیر استاندارد و سبک) -->
-        <div class="video-wrapper">
-            <video controls preload="none" playsinline>
-                <source src="video.mp4" type="video/mp4">
-                مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.
+        <!-- کادر عمودی ۹:۱۶ با نمایش فریم اول به عنوان پوستر -->
+        <div class="video-container">
+            <video controls preload="metadata" playsinline>
+                <source src="video.mp4#t=0.001" type="video/mp4">
+                مرورگر شما امکان پخش ویدیو را ندارد.
             </video>
         </div>
 
-        <!-- متن و دل‌نوشته -->
-        <div class="poem-card">
-            مادرم رفت و نگاهش تا ابد در خانه ماند<br>
-            مهربانی‌های او بر صفحه پروانه ماند...<br>
-            <span style="color: var(--accent-gold); font-size: 0.8rem; display: block; margin-top: 6px;">
-                نثار روح پاکش شاخه‌گلی با ذکر صلوات و فاتحه هدیه فرمایید.
-            </span>
-        </div>
+        <section class="memorial-text-card">
+            <p>مادرم رفت و نگاهش تا ابد در خانه ماند<br>مهربانی‌های او بر صفحه پروانه ماند...</p>
+            <span class="memorial-note">جهت شادی روح پاکش، با قرائت فاتحه و صلوات یادش را گرامی بدارید.</span>
+        </section>
 
-        <!-- دکمه ارسالی صلوات/فاتحه شبیه دکمه‌های iOS -->
-        <div class="counter-section">
-            <button class="salawat-btn" id="salawatBtn" onclick="sendSalawat()">
-                <span>🌸 ارسال صلوات و فاتحه</span>
-                <span class="counter-badge" id="counterDisplay">۰</span>
+        <section class="action-area">
+            <button class="pill-button" id="salawatBtn" onclick="registerSalawat()">
+                <span>ارسال صلوات و فاتحه</span>
+                <span class="counter-badge" id="salawatCount">۰</span>
             </button>
-            <span class="hint-text" id="statusMsg">با لمس کلید، نیت شما ثبت می‌شود</span>
-        </div>
+            <p class="status-caption" id="statusHint">با لمس کلید، نیت شما ثبت می‌شود</p>
+        </section>
 
-        <div class="footer">
-            fattanehaghajanpour.ir
-        </div>
+        <footer class="domain-tag">fattanehaghajanpour.ir</footer>
 
-    </div>
+    </main>
 
     <script>
-        // تبدیل اعداد به فارسی برای زیبایی فونت
-        function toPersianDigits(n) {
-            const farsiDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            return n.toString().replace(/\d/g, x => farsiDigits[x]);
+        function toPersianDigits(value) {
+            const digits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return value.toString().replace(/\d/g, match => digits[match]);
         }
 
-        // شمارنده ذخیره شونده در حافظه مرورگر فرد
-        let count = parseInt(localStorage.getItem('user_salawat_count') || '0');
-        const counterDisplay = document.getElementById('counterDisplay');
-        const statusMsg = document.getElementById('statusMsg');
+        let totalSalawat = parseInt(localStorage.getItem('user_salawat_count') || '0', 10);
+        const countDisplay = document.getElementById('salawatCount');
+        const hintDisplay = document.getElementById('statusHint');
 
-        counterDisplay.innerText = toPersianDigits(count);
+        countDisplay.innerText = toPersianDigits(totalSalawat);
 
-        function sendSalawat() {
-            count++;
-            localStorage.setItem('user_salawat_count', count);
-            counterDisplay.innerText = toPersianDigits(count);
+        function registerSalawat() {
+            totalSalawat += 1;
+            localStorage.setItem('user_salawat_count', totalSalawat);
+            countDisplay.innerText = toPersianDigits(totalSalawat);
 
-            // لرزش ظریف شبیه آیفون در صورت پشتیبانی گوشی
             if (navigator.vibrate) {
-                navigator.vibrate(35);
+                navigator.vibrate(30);
             }
 
-            statusMsg.innerText = "ذکر شما ثبت شد، روحش شاد و قرین رحمت";
-            statusMsg.style.color = "var(--accent-gold)";
+            hintDisplay.innerText = "ذکر شما ثبت شد؛ روحشان قرین رحمت الهی";
+            hintDisplay.style.color = "var(--accent-gold)";
         }
     </script>
 </body>
